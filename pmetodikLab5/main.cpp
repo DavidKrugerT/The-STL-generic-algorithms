@@ -1,49 +1,50 @@
 #include "Car.h"
 #include <iostream>		//cout
 #include <vector>		//vector
-#include <algorithm>	//for each
+#include <algorithm>	//for each adje find_if
 #include <functional>
-//template<class E>
-//void myPrint(const std::vector<E>& rhs) {
-//	for (E a : rhs) {
-//		std::cout << a << '\n';
-//	}
-//}
+#include <string>
 
-
-struct myPrint  {
-	void operator()(Car& car) const{
-		std::cout << car;
+struct adja
+{
+	bool operator()(const Car &lhs, const Car &rhs){
+		return lhs == rhs;
 	}
 };
 
-// binary
-//struct myPrint {
-//	void operator()(Car& car, Car& car2) const {
-//		std::cout << car;
-//	}
-//};
+struct faggot
+{
+	int n;
+	faggot(int n) : n(n) {}
+		bool operator()(const Car&car) {
+			return car < n;
+		}
+};
+
+struct myPrint  {
+	std::string str;
+	myPrint(std::string str = "") : str(str) {};
+	void operator()(Car& car) const{
+		std::cout << str + ": "<< car << std::endl;
+	}
+};
+
 void print(Car & car) {
 	std::cout << car;
 }
-
 
 struct printClass {
 	static void print(Car&car) {
 		std::cout << car;
 	}
 };
+
 int main() {
 
-	Car b("Zeat", 150);
-	Car c("Volvo", 170);
-	
 	std::vector<Car> cars;
 	
-
-
-	std::string models[] = { "Volvo", "BMW", "Saab", "Zeat", "Mercedes" };
-	double speeds[] = { 50, 100, 150, 200, 220 };
+	std::string models[6] = { "Volvo", "Volvo", "BMW", "Saab", "Zeat", "Mercedes" };
+	double speeds[6] = { 50, 50, 100, 150, 200, 220 };
 
 	for (unsigned int a = 0; a < sizeof(models) / sizeof(models[0]); a = a + 1){
 		Car f(models[a], speeds[a]);
@@ -51,20 +52,18 @@ int main() {
 	}
 	
 	// 1)
-	std::cout << "Vector cars : ";
-	std::for_each(cars.begin(), cars.end(), myPrint());
-	std::for_each(std::begin(cars), std::end(cars), [&](Car & car) {
-		myPrint()(car);
-	});
-	std::function<void(Car&)> f = std::bind(myPrint(), std::placeholders::_1);
-	std::for_each(cars.begin(), cars.end(), f);
-	std::for_each(cars.begin(), cars.end(), std::bind(print, std::placeholders::_1));
-	std::function<void(Car&)> f2 = std::bind(printClass::print, std::placeholders::_1);
-	for (int i = 0; i < cars.size(); i++) {
-		myPrint()(cars[i]);
-	}
-	for (auto e : cars)
-		myPrint()(e);
+	std::for_each(cars.begin(), cars.end(), myPrint("cars"));
+	std::cout << std::endl;
+
+	// 2)
+	myPrint("find if less than 150")(*std::find_if(cars.begin(), cars.end(), faggot(150.f)));
+	std::cout << std::endl;
+
+	// 3) 
+	myPrint("adjacent cars")(*std::adjacent_find(cars.begin(), cars.end(), adja()));
+	std::cout << std::endl;
+
 	system("PAUSE");
-	return 0;
+	return EXIT_SUCCESS;
 }
+

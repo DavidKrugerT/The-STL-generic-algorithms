@@ -2,8 +2,6 @@
 #include <string>
 #include <iostream>
 
-
-
 class Car
 {
 	std::string name;
@@ -12,14 +10,15 @@ public:
 
 	Car(std::string, double);
 	~Car();
-	std::string getName() { return name; }
-	double getSpeed() { return speed; }
+	std::string getName()  { return name; } 
+	double getSpeed() const { return speed; }
 	friend std::ostream& operator<<(std::ostream& os, Car &rhs);
 	friend bool operator==(const Car &lhs, const Car &rhs);
+	friend bool operator<(const Car &car, double i);
 
 	
 };
-// lata tjockis gör en egen fil, skoja
+
 Car::Car(std::string name, double speed) : name(name), speed(speed)
 {
 }
@@ -36,9 +35,10 @@ std::ostream & operator<<(std::ostream & os, Car & rhs)
 
 bool operator==(const Car & lhs, const Car & rhs)
 {
-	if (lhs.name == rhs.name && lhs.speed == rhs.speed)
-	{
-		return true;
-	}
-	return false;
+	return lhs.name == rhs.name && lhs.speed == rhs.speed;
+}
+
+inline bool operator<(const Car & car, double i)
+{
+	return car.getSpeed() < i;
 }
