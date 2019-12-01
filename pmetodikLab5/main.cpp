@@ -12,10 +12,10 @@ struct adja
 	}
 };
 
-struct faggot
+struct findOp
 {
 	int n;
-	faggot(int n) : n(n) {}
+	findOp(int n) : n(n) {}
 		bool operator()(const Car&car) {
 			return car < n;
 		}
@@ -56,7 +56,7 @@ int main() {
 	std::cout << std::endl;
 
 	// 2)
-	myPrint("find if less than 150")(*std::find_if(cars.begin(), cars.end(), faggot(150.f)));
+	myPrint("find if less than 150")(*std::find_if(cars.begin(), cars.end(), findOp(150.f)));
 	std::cout << std::endl;
 
 	// 3) 
