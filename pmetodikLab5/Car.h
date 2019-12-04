@@ -2,13 +2,19 @@
 #include <string>
 #include <iostream>
 
+
+/*
+------------------------------------------------------
+	Class Car - Creating a Car with name and top speed
+------------------------------------------------------
+*/
 class Car
 {
 	std::string name;
 	double speed;
 public:
-	Car(std::string, double);
-	~Car();
+	Car(std::string, double);		//initializer
+	~Car();							//deconstructor
 	std::string getName()  { return name; } 
 	double getSpeed() const { return speed; }
 	friend std::ostream& operator<<(std::ostream& os, Car &rhs); //ostream operator
