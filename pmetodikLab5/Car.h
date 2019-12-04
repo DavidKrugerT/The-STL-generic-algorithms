@@ -7,16 +7,14 @@ class Car
 	std::string name;
 	double speed;
 public:
-
 	Car(std::string, double);
 	~Car();
 	std::string getName()  { return name; } 
 	double getSpeed() const { return speed; }
-	friend std::ostream& operator<<(std::ostream& os, Car &rhs);
-	friend bool operator==(const Car &lhs, const Car &rhs);
-	friend bool operator<(const Car &car, double i);
-
-	
+	friend std::ostream& operator<<(std::ostream& os, Car &rhs); //ostream operator
+	friend bool operator==(const Car &lhs, const Car &rhs); //is equal to oprator
+	friend bool operator<(const Car &car, double i); //less than Operator
+	Car(const Car & rhs) : Car(rhs.name, rhs.speed) {}; //Copy Constructor
 };
 
 Car::Car(std::string name, double speed) : name(name), speed(speed)

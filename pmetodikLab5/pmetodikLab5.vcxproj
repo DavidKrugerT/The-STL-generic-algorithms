@@ -119,7 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h" />
-    <ClInclude Include="Find.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
