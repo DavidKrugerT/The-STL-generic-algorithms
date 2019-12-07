@@ -1,15 +1,14 @@
 #include "Car.h"
 #include <iostream>		//cout
 #include <vector>		//vector
-#include <algorithm>	//for each adje find_if
+#include <algorithm>	//for each adje find_if a
 #include <functional>
 #include <string>
+#include <numeric>
 
-/*
-------------------------------------------
-	structs: Compare - findOp - myPrint
-------------------------------------------
-*/
+/*-----------------------------------------
+	structs: Compare - findOp - myPrint - MyBinOp
+------------------------------------------*/
 
 struct adja
 {
@@ -35,6 +34,14 @@ struct myPrint  {
 	}
 };
 
+struct MyBinOp
+{
+	double operator()(const Car & lhs, const Car & rhs) const{
+		return lhs.getSpeed() + rhs.getSpeed();
+	};
+};
+
+
 int main() {
 
 	std::vector<Car> cars;
@@ -55,35 +62,27 @@ int main() {
 		cars.push_back(f);
 	}
 	
-	/*
-	------------------------------------------
-		std::for_each - 
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::for_each - Krav: 
+	------------------------------------------*/
 	std::for_each(cars.begin(), cars.end(), myPrint("cars"));
 	std::cout << std::endl;
 
-	/*
-	------------------------------------------
-		std::find_if - 
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::find_if - Krav: 
+	------------------------------------------*/
 	myPrint("find if less than 150")(*std::find_if(cars.begin(), cars.end(), findOp(150.f)));
 	std::cout << std::endl;
 
-	/*
-	------------------------------------------
-		std::ajdacent_find - 
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::ajdacent_find - Krav:
+	------------------------------------------*/
 	myPrint("adjacent cars")(*std::adjacent_find(cars.begin(), cars.end(), adja()));
 	std::cout << std::endl;
 
-	/*
-	------------------------------------------
-		std::equal - 
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::equal - Krav:
+	------------------------------------------*/
 	if ((std::equal(cars.begin(), cars.end(), carss, adja())))
 	{
 		std::cout << "They are equal" << std::endl;
@@ -95,11 +94,9 @@ int main() {
 	std::cout << '\n';
 
 
-	/*
-	------------------------------------------
-		std::search
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::search - Krav:
+	------------------------------------------*/
 	std::vector<Car>::iterator it;
 	Car carNeelde[] = { Car(models[4], speeds[4]), Car(models[5], speeds[5]) };
 
@@ -112,11 +109,15 @@ int main() {
 	{
 		std::cout << "carNeedle not found" << '\n';
 	}
-	/*
-	------------------------------------------
-		std::
-	------------------------------------------
-	*/
+	/*------------------------------------------
+		std::accumulate - Krav: Operator+, samt en init double value.
+	------------------------------------------*/
+	double i = 0;
+	double sum = std::accumulate(cars.begin(), cars.end(), i, MyBinOp());
+	std::cout << "vector sum: " << sum << std::endl;
+
+
+
 	system("PAUSE");
 	return EXIT_SUCCESS;
 }
